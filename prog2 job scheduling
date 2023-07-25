@@ -1,0 +1,52 @@
+class Job:
+    def __init__(self,taskId,deadline,profit):
+        self.taskId=taskId
+        self.deadline=deadline
+        self.profit=profit
+def schdulejobs(jobs,T):
+    profit=0
+    slot=[-1]*T
+    jobs.sort(key=lambda x:x.profit,reverse=True)
+    for job in jobs:
+        for j in reversed(range(min(T,job.deadline))):
+            if slot[j]==-1:
+                slot[j]=job.taskId
+                profit+=job.profit
+                break
+    print("The schdule jobs are:",list(filter(lambda x:x!=-1,slot)))
+    print("THe profit are",profit)
+if __name__ == '__main__':
+    n=int(input("Enter the no of jobs:"))
+    jobs=[]
+    for i in range(n):
+        taskId=int(input("Enter the Id of jobs{}:".format(i+1)))
+        deadline=int(input("Enter the deadline of jobs{}:".format(i+1)))
+        profit=int(input("Enter the profit of jobs{}:".format(i+1)))  
+        jobs.append(Job(taskId,deadline,profit))
+    T=int(input("Enter the time:"))
+    schdulejobs(jobs,T)
+
+
+
+# OUTPUT:
+
+# Enter the no of jobs:5
+# Enter the Id of jobs1:1
+# Enter the deadline of jobs1:2
+# Enter the profit of jobs1:20
+# Enter the Id of jobs2:2
+# Enter the deadline of jobs2:2
+# Enter the profit of jobs2:15
+# Enter the Id of jobs3:3
+# Enter the deadline of jobs3:1
+# Enter the profit of jobs3:10
+# Enter the Id of jobs4:4
+# Enter the deadline of jobs4:3
+# Enter the profit of jobs4:5
+# Enter the Id of jobs5:5
+# Enter the deadline of jobs5:3
+# Enter the profit of jobs5:1
+# Enter the time:5
+# The schdule jobs are: [2, 1, 4]
+# THe profit are 40
+
