@@ -1,0 +1,199 @@
+import time
+from numpy.random import randint
+import matplotlib.pyplot as plt
+def mergesort(array):
+    if len(array)>1:
+        r=len(array)//2
+        L=array[:r]
+        M=array[r:]
+        mergesort(L)
+        mergesort(M)
+        i=j=k=0
+        while i<len(L) and j<len(M):
+            if L[i]<M[j]:
+                array[k]=L[i]
+                i+=1
+            else:
+                array[k]=M[j]
+                j+=1
+            k+=1
+        while i<len(L):
+            array[k]=L[i]
+            i+=1
+            k+=1
+        while j<len(M):
+            array[k]=M[j]
+            j+=1
+            k+=1
+def partition(array,low,high):
+    pivot=array[high]
+    i=low-1
+    for j in range(low,high):
+        if(array[j]<=pivot):
+            i=i+1
+            (array[i],array[j])=(array[j],array[i])
+    (array[i+1],array[high])=(array[high],array[i+1])
+    return i+1
+def quicksort(array,low,high):
+    if low<high:
+        pi=partition(array,low,high)
+        quicksort(array,low,pi-1)
+        quicksort(array,pi+1,high)
+data=[3,-2,5,6,9,8]
+print("Unsorted array:")
+print(data)
+size=len(data)
+quicksort(data,0,size-1)
+print("sorted array:")
+print(data)
+
+def selectionsort(array,size):
+    for step in range(size):
+        min_idx=step
+        for i in range(step+1,size):
+            if array[i]<array[min_idx]:
+                min_idx=i
+                (array[step],array[min_idx])=(array[min_idx],array[step])
+data=[-4,6,8,8,11]
+print("Unsorted array:")
+print(data)
+size=len(data)
+selectionsort(data,size)
+print("sorted array:")
+print(data)
+
+def read_input():
+    a=[]
+    n=int(input("Enter the no of tv channels:"))
+    print("enter the no of viewers:")
+    for i in range(0,n):
+        l=int(input())
+        a.append(l)
+    return a
+elements=list()
+times=list()
+global labeldata
+print("1.Mergesort 2.Quicksort 3.Selectionsort")
+ch=int(input("Enter your choice:"))
+if ch==1:
+    array=read_input()
+    mergesort(array)
+    labeldata="Mergesort"
+    print("Sorted array is:")
+    print(array)
+elif ch==2:
+    array=read_input()
+    size=len(array)
+    labeldata="Quickesort"
+    quicksort(array,0,size-1)
+    print("Sorted array is:")
+    print(array)
+if ch==3:
+    array=read_input()
+    size=len(array)
+    labeldata="Selectionsort"
+    selectionsort(array,size)
+    print("Sorted array is:")
+    print(array)
+print("-------Running Time Analysis")
+for i in range(1,11):
+    array=randint(0,1000*i,1000*i)
+    start=time.time()
+    if ch==1:
+        mergesort(array)
+    elif ch==2:
+        quicksort(array,0,size-1)
+    else:
+        size=len(array)
+        selectionsort(array,size)
+    end=time.time()
+    elements.append(len(array))
+    times.append(end-start)
+    print(len(array),labeldata,end-start)
+plt.xlabel('length list')
+plt.ylabel('time complexity')
+plt.plot(elements,times,label=labeldata)
+plt.grid()
+plt.legend()
+plt.show()
+
+
+# OUTPUT:
+
+# Unsorted array:
+# [3, -2, 5, 6, 9, 8]
+# sorted array:
+# [-2, 3, 5, 6, 8, 9]
+# Unsorted array:
+# [-4, 6, 8, 8, 11]
+# sorted array:
+# [-4, 6, 8, 8, 11]
+# 1.Mergesort 2.Quicksort 3.Selectionsort
+# Enter your choice:1
+# Enter the no of tv channels:3
+# enter the no of viewers:
+# 3
+# 5
+# 7
+# Sorted array is:
+# [3, 5, 7]
+# -------Running Time Analysis
+# 1000 Mergesort 0.010915994644165039
+# 2000 Mergesort 0.017368555068969727
+# 3000 Mergesort 0.0214691162109375
+# 4000 Mergesort 0.029781103134155273
+# 5000 Mergesort 0.039148807525634766
+# 6000 Mergesort 0.04401659965515137
+# 7000 Mergesort 0.05788564682006836
+# 8000 Mergesort 0.06212306022644043
+# 9000 Mergesort 0.0709524154663086
+# 10000 Mergesort 0.08507800102233887
+
+
+# 1.Mergesort 2.Quicksort 3.Selectionsort
+# Enter your choice:2
+# Enter the no of tv channels:7
+# enter the no of viewers:
+# 3
+# 5
+# 1
+# 6
+# 3
+# 4
+# 5
+# Sorted array is:
+# [1, 3, 3, 4, 5, 5, 6]
+# -------Running Time Analysis
+# 1000 Quickesort 2.9802322387695312e-05
+# 2000 Quickesort 3.4332275390625e-05
+# 3000 Quickesort 3.409385681152344e-05
+# 4000 Quickesort 1.811981201171875e-05
+# 5000 Quickesort 2.2411346435546875e-05
+# 6000 Quickesort 1.8596649169921875e-05
+# 7000 Quickesort 2.1219253540039062e-05
+# 8000 Quickesort 1.6927719116210938e-05
+# 9000 Quickesort 2.6226043701171875e-05
+# 10000 Quickesort 3.814697265625e-05
+
+
+# 1.Mergesort 2.Quicksort 3.Selectionsort
+# Enter your choice:3
+# Enter the no of tv channels:4
+# enter the no of viewers:
+# 5
+# 3
+# 4
+# 3
+# Sorted array is:
+# [4, 3, 3, 5]
+# -------Running Time Analysis
+# 1000 Selectionsort 0.1429147720336914
+# 2000 Selectionsort 0.5811810493469238
+# 3000 Selectionsort 1.2497329711914062
+# 4000 Selectionsort 2.170696973800659
+# 5000 Selectionsort 4.832432985305786
+# 6000 Selectionsort 4.7533440589904785
+# 7000 Selectionsort 8.016117334365845
+# 8000 Selectionsort 8.299519538879395
+# 9000 Selectionsort 12.02490496635437
+# 10000 Selectionsort 14.479011535644531
